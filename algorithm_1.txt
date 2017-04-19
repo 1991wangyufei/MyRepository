@@ -1,0 +1,86 @@
+
+
+
+## 使用2个队列实现栈 ##
+
+class MyStack {
+
+    Queue[] q = new LinkedBlockingQueue[2];
+    // 记录非空队列的脚标
+    int index = -1;
+
+    public MyStack() {
+        this.q[0] = new LinkedBlockingQueue();
+        this.q[1] = new LinkedBlockingQueue();
+    }
+
+    public void push(Object element) {
+        if (index == -1) {
+            q[0].add(element);
+            index = 0;
+        } else {
+            q[index].add(element);
+        }
+    }
+
+    public Object pop() {
+        if (index == -1) {
+            System.out.println("Task is empty !");
+            return null;
+
+        } else {
+            while (q[index].size() > 1) {
+                q[1-index].add(q[index].poll());
+            }
+            Object item = q[index].poll();
+
+            if (q[1- index].isEmpty()) {
+                index = -1;
+            } else {
+                index = 1 - index;
+            }
+            return item;
+        }
+    }
+
+    public int size() {
+        return q[index].size();
+    }
+
+}
+
+
+## 使用2个栈实现队列 ##
+
+class MyQueue {
+
+    Stack orderedStack = new Stack();
+    Stack reverseStack = new Stack();
+
+    public void add(Object element) {
+        reverseStack.push(element);
+    }
+
+    public Object poll() {
+        if (!orderedStack.isEmpty()) {
+            return orderedStack.pop();
+
+        } else {
+            while (!reverseStack.isEmpty()) {
+                orderedStack.push(reverseStack.pop());
+            }
+
+            if (orderedStack.isEmpty()) {
+                System.out.println("Queue is empty !");
+                return null;
+            } else {
+                return orderedStack.pop();
+            }
+        }
+    }
+
+    public int size() {
+        return orderedStack.size() + reverseStack.size();
+    }
+
+}

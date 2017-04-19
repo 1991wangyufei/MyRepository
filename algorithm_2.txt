@@ -1,0 +1,33 @@
+    
+    ## 计算 1 ～ a * 10 ^ b 中含有数c(0-9)的数字的个数 (例如，1～ 1000中含有5的数字的个数) ##
+     
+    public static int method1(int a, int b, int c) {
+        int result = 0;
+        if (a < c) {
+            result =  (int) (Math.pow(10, b) - Math.pow(9, b)) * a;
+
+        } else if (a == c) {
+            result = (int) (Math.pow(10, b) - Math.pow(9, b)) * a + 1;
+
+        } else {
+            result = (int) (Math.pow(10, b) - Math.pow(9, b)) * (a - 1) + (int) Math.pow(10, b);
+        }
+        return result;
+    }
+
+    
+    ## 计算1 ～ num 中含有数c(0-9)的数字的个数 ##
+     
+    public static int method2(String num, int c) {
+        int result = 0;
+        int len = num.length();
+        for (int i = 0; i < len; i++) {
+            if (Integer.valueOf(num.substring(i, i+1)) == c) {
+                result += method1(c, len - i - 1, c) + (i < len -1 ? Integer.valueOf(num.substring(i+1, len)) : 0);
+                break;
+            } else {
+                result += method1(Integer.valueOf(num.substring(i, i+1)), len - i - 1, c);
+            }
+        }
+        return result;
+    }
