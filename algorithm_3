@@ -6,10 +6,10 @@
 隔层存储节点。
 
 
-Class TreeNode {
+class TreeNode {
     int value;
-    Node left;
-    Node right;
+    TreeNode left;
+    TreeNode right;
 }
 
 
