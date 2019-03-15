@@ -1,0 +1,41 @@
+##  给定一个二叉树，按高度由高到低依次打印从右侧视角看到的节点 ##
+
+
+思路：大方向属于二叉树的层次遍历，只不过每次只关注每一层的最后一个（最右）节点，数据结构考虑使用队列，由于队列是先进先出，
+要保证取到每一层的最后一个节点（最后入队），则队列中每时每刻应仅存储的位于同一层的节点，这样一个队列不够，考虑使用2个队列
+隔层存储节点。
+
+
+Class TreeNode {
+    int value;
+    Node left;
+    Node right;
+}
+
+
+void scanRightSide(TreeNode Root) {
+     LinkedBlockingQueue<TreeNode> empty = new LinkedBlockingQueue<TreeNode>();
+     LinkedBlockingQueue<TreeNode> full = new LinkedBlockingQueue<TreeNode>();
+     full.add(Root);
+     
+     while(full.peek() != null) { //当full队列也取空的时候，就遍历完成
+     
+        T item;
+        while(full.peek() != null) {
+           item = full.remove();
+           
+           if (item.left != null) {
+              empty.add(item.left);
+           }
+           if (item.right != null) {
+              empty.add(item.right);
+           }
+        }
+        print(item.value); // 打印full队列中最后一个元素
+        
+        Queue<Node> tmp = empty; // 一次内层循环后，full与empty交换
+        empty = full;
+        full = tmp;
+     }
+}
+
