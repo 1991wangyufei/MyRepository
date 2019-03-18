@@ -7,35 +7,34 @@
 
 
 class TreeNode {
-    int value;
+    int val;
     TreeNode left;
     TreeNode right;
 }
 
 
 void scanRightSide(TreeNode Root) {
-     LinkedBlockingQueue<TreeNode> empty = new LinkedBlockingQueue<TreeNode>();
-     LinkedBlockingQueue<TreeNode> full = new LinkedBlockingQueue<TreeNode>();
-     full.add(Root);
-     
-     while(full.peek() != null) { //当full队列也取空的时候，就遍历完成
-     
-        T item;
-        while(full.peek() != null) {
-           item = full.remove();
-           
-           if (item.left != null) {
-              empty.add(item.left);
-           }
-           if (item.right != null) {
-              empty.add(item.right);
-           }
+        if (root == null) {
+            return;
         }
-        print(item.value); // 打印full队列中最后一个元素
-        
-        Queue<Node> tmp = empty; // 一次内层循环后，full与empty交换
-        empty = full;
-        full = tmp;
-     }
+        LinkedList<TreeNode> queue = new LinkedList<TreeNode>();
+        queue.add(root);
+
+        while(!queue.isEmpty()) { //当队列取空的时候，就遍历完成
+            TreeNode last = queue.getLast();
+            println(last.val);   // 打印当前队列中的最后一个元素
+            
+            TreeNode item = null;
+            do{
+               item = queue.remove();
+               if (item.left != null) {
+                  queue.add(item.left);
+               }
+               if (item.right != null) {
+                  queue.add(item.right);
+               }
+            } while(item != last);
+        }
+        return result;
 }
 
